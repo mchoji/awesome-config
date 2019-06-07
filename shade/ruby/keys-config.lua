@@ -770,6 +770,10 @@ function hotkeys:init(args)
 			{ env.mod, "Mod1" }, "space", function() awful.spawn("clipflap --show") end,
 			{ description = "Clipboard manager", group = "Applications" }
 		},
+        {
+            {}, "Print", function() awful.spawn("xfce4-screenshooter") end,
+            { description = "Take a screenshot", group = "Applications" }
+        },
 
 		{
 			{ env.mod }, "l", focus_switch_byd("right"),
@@ -805,7 +809,7 @@ function hotkeys:init(args)
 			{ description = "System updates info", group = "Widgets" }
 		},
 		{
-			{ env.mod }, "`", function() redflat.widget.minitray:toggle() end,
+			{ env.mod }, ";", function() redflat.widget.minitray:toggle() end,
 			{ description = "Minitray", group = "Widgets" }
 		},
 		{

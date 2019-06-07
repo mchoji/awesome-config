@@ -97,16 +97,16 @@ taglist.buttons = awful.util.table.join(
 	awful.button({         }, 5, function(t) awful.tag.viewprev(t.screen) end)
 )
 
--- some tag settings which indirectky depends on row and columns number of taglist
+-- some tag settings which indirectly depends on row and columns number of taglist
 taglist.names = {
-	"Prime", "Full", "Code", "Edit", "Misc", "Game",
-	"Spare", "Back", "Test", "Qemu", "Data", "Free"
+	"Prime", "Nav", "Edit", "Code", "Misc", "Full",
+	"Spare", "Back", "Read", "Test", "Data", "Free"
 }
 
 local al = awful.layout.layouts
 taglist.layouts = {
-	al[5], al[6], al[6], al[4], al[3], al[3],
-	al[5], al[6], al[6], al[4], al[3], al[1]
+	al[5], al[4], al[6], al[6], al[3], al[7],
+	al[5], al[4], al[6], al[4], al[4], al[1]
 }
 
 -- Textclock widget
@@ -176,7 +176,7 @@ microphone.buttons = awful.util.table.join(
 -- Keyboard layout indicator
 --------------------------------------------------------------------------------
 local kbindicator = {}
-redflat.widget.keyboard:init({ "English", "Russian" })
+redflat.widget.keyboard:init({ "English Int.", "English", "Portuguese" })
 kbindicator.widget = redflat.widget.keyboard()
 
 kbindicator.buttons = awful.util.table.join(
@@ -230,7 +230,7 @@ sysmon.widget.battery = redflat.widget.battery(
 -- network speed
 sysmon.widget.network = redflat.widget.net(
 	{
-		interface = "wlp60s0",
+		interface = "wlp3s0",
 		speed = { up = 6 * 1024^2, down = 6 * 1024^2 },
 		autoscale = false
 	},
