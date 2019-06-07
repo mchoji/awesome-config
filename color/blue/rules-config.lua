@@ -83,7 +83,7 @@ function rules:init(args)
 		-- Tags placement
 		{
 			rule       = { instance = "Xephyr" },
-			properties = { tag = self.env.theme == "bankai" and "Test" or "Free", fullscreen = true }
+			properties = { tag = self.env.theme == "ruby" and "Test" or "Free", fullscreen = true }
 		},
         -- Sublime Text
         {
@@ -93,13 +93,13 @@ function rules:init(args)
         -- Spotify
         {
             rule       = { name = "[sS]potify" },
-            properties = { tag = self.env.theme == "bankai" and "Back" or "Free", 
+            properties = { tag = self.env.theme == "ruby" and "Back" or "Free", 
                            fullscreen = false }
         },
         -- KeePass
         {
             rule       = { class = "keepassxc" },
-            properties = { tag = self.env.theme == "bankai" and "Back" or "Free" }
+            properties = { tag = self.env.theme == "ruby" and "Back" or "Free" }
         },
         -- Evince
         {
@@ -109,53 +109,36 @@ function rules:init(args)
         -- VS Code
         {
             rule       = { class = "code-oss" },
-            properties = { tag = self.env.theme == "bankai" and "Code" or "Edit",
-                           maximized = true, switchtotag = true }
-        },
-        -- Spyder
-        {
-            rule       = { class = "Spyder" },
-            properties = { tag = self.env.theme == "bankai" and "Code" or "Edit",
+            properties = { tag = self.env.theme == "ruby" and "Code" or "Edit",
                            maximized = true, switchtotag = true }
         },
         -- JabRef
         {
             rule       = { class = "org-jabref-JabRefMain" },
-            properties = { tag = self.env.theme == "bankai" and "Misc" or "Free" }
-        },
-        -- Libreoffice
-        {   
-            rule_any   = { class = { "libreoffice-startcenter",
-                                   "libreoffice-writer",
-                                   "libreoffice-calc",
-                                   "libreoffice-impress",
-                                   "libreoffice-base",
-                                   "libreoffice-math",
-                                   "VCLSalFrame.DocumentWindow" }},
-            properties = { tag = self.env.theme == "bankai" and "Misc" or "Edit" }
+            properties = { tag = self.env.theme == "ruby" and "Misc" or "Free" }
         },
         -- WPS Office
         {
             rule_any   = { class = { "Wps", "Wpp", "Et" }},
-            properties = { tag = self.env.theme == "bankai" and "Misc" or "Full",
+            properties = { tag = self.env.theme == "ruby" and "Misc" or "Full",
                            switchtotag = true, maximized = true }
         },
         -- Wireshark
         {
             rule       = { class = "Wireshark" },
-            properties = { tag = self.env.theme == "bankai" and "Data" or "Free",
+            properties = { tag = self.env.theme == "ruby" and "Data" or "Free",
                            switchtotag = true }
         },
         -- File management
         {
             rule_any   = { class = { "Nautilus", "Thunar", "Nemo" } },
-            properties = { tag = self.env.theme == "bankai" and "Nav" or "Main",
+            properties = { tag = self.env.theme == "ruby" and "Nav" or "Main",
                            switchtotag = true } 
         },
         -- Thunderbird
         {
             rule       = { class = "Thunderbird" },
-            properties = { tag = self.env.theme == "bankai" and "Spare" or "Full" }
+            properties = { tag = self.env.theme == "ruby" and "Spare" or "Full" }
         },
         -- Video players
         {
@@ -171,14 +154,9 @@ function rules:init(args)
         {
             rule       = { class = "jetbrains-%w+", type = "normal" },
             except     = { class = "jetbrains-toolbox" },
-            properties = { tag = self.env.theme == "bankai" and "Code" or "Full",
+            properties = { tag = self.env.theme == "ruby" and "Code" or "Full",
                            switchtotag = true }
         },
-        --{
-        --    rule       = { class = "jetbrains-toolbox" },
-        --    properties = { size_hints_honor = true,
-        --                    type = "menu" }
-        --},
 		-- Jetbrains dirty focus trick assuming separate tag used for IDE
 		{
 			rule       = { class = "jetbrains-%w+", type = "normal" },
