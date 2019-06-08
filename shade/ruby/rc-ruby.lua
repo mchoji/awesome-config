@@ -168,6 +168,7 @@ local microphone = {}
 local microphone_style = {
 	widget = redflat.gauge.audio.blue.new,
 	audio = beautiful.individual and beautiful.individual.microphone_audio or {},
+    notify = { icon = beautiful.path .. "/widget/microphone-ctl.svg" }
 }
 --microphone_style.audio.gauge = redflat.gauge.monitor.dash
 microphone_style.audio.gauge = false
