@@ -214,8 +214,8 @@ function desktop:init(args)
 	--------------------------------------------------------------------------------
 	local vnstat = { geometry = wgeometry(grid, places.vnstat, workarea) }
 
-	local vnstat_daily   = system.vnstat_check("-d -i wlp3s0")
-	local vnstat_monthly = system.vnstat_check("-m -i wlp3s0")
+	local vnstat_daily   = system.vnstat_check("-d -i wlp3s0 --locale pt_BR.UTF8")
+	local vnstat_monthly = system.vnstat_check("-m -i wlp3s0 --locale pt_BR.UTF8")
 
 	vnstat.args = {
 		sensors = {

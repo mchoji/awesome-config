@@ -28,6 +28,12 @@ theme.desktopbg    = theme.path .. "/wallpaper/transparent.png"
 --------------------------------------------------------------------------------
 theme:update()
 
+-- Desktop file parser
+--------------------------------------------------------------------------------
+--theme.service.dfparser.icons.theme         = "/usr/share/icons/ACYLS"
+--theme.service.dfparser.icons.custom_only   = true 
+--theme.service.dfparser.icons.scalable_only = true
+
 
 -- Desktop config
 -----------------------------------------------------------------------------------------------------------------------
