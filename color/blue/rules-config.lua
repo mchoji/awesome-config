@@ -150,6 +150,16 @@ function rules:init(args)
             properties = { tag = "Full", floating = true, 
                            size_hints_honor = true }
         },
+        {
+            rule       = { class = "Navigator" },
+            properties = { maximized = false }
+        },
+        -- Tor Browser
+        {
+            rule       = { class = "Tor Browser" },
+            properties = { tag = "Free",
+                           size_hints_honor = true }
+        },
         -- Jetbrains
         {
             rule       = { class = "jetbrains-%w+", type = "normal" },
