@@ -142,7 +142,7 @@ function rules:init(args)
         },
         -- Video players
         {
-            rule_any   = { class = { "vlc", "mpv" }},
+            rule_any   = { class = { "vlc", "mpv" } },
             properties = { tag = "Full", switchtotag = true }
         },
         {
@@ -150,8 +150,9 @@ function rules:init(args)
             properties = { tag = "Full", floating = true, 
                            size_hints_honor = true }
         },
+        -- Web Browsers
         {
-            rule       = { class = "Navigator" },
+            rule_any   = { class = { "Chromium-browser", "Firefox" } },
             properties = { maximized = false }
         },
         -- Tor Browser
