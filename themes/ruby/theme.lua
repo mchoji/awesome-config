@@ -31,8 +31,8 @@ theme:update()
 -- Desktop file parser
 --------------------------------------------------------------------------------
 theme.service.dfparser.icons.theme         = theme.homedir .. "/.icons/Flat-Remix-Green-Dark"
---theme.service.dfparser.icons.custom_only   = true 
---theme.service.dfparser.icons.scalable_only = true
+theme.service.dfparser.icons.custom_only   = false 
+theme.service.dfparser.icons.scalable_only = false
 
 
 -- Desktop config
