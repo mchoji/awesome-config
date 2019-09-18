@@ -7,7 +7,7 @@ local awful =require("awful")
 local beautiful = require("beautiful")
 local redtitle = require("redflat.titlebar")
 
--- Initialize tables and vars for module
+-- Initialize tables and vars for the module
 -----------------------------------------------------------------------------------------------------------------------
 local rules = {}
 
@@ -28,7 +28,7 @@ rules.floating_any = {
 	type = { "dialog" }
 }
 
-rules.titlebar_exeptions = {
+rules.titlebar_exceptions = {
 	class = { "Cavalcade", "Clipflap", "Steam", "Qemu-system-x86_64" }
 }
 
@@ -67,7 +67,7 @@ function rules:init(args)
 		},
 		{
 			rule_any   = { type = { "normal", "dialog" }},
-			except_any = self.titlebar_exeptions,
+			except_any = self.titlebar_exceptions,
 			properties = { titlebars_enabled = true }
 		},
 		{
@@ -93,7 +93,7 @@ function rules:init(args)
         -- Spotify
         {
             rule       = { name = "[sS]potify" },
-            properties = { tag = self.env.theme == "ruby" and "Back" or "Free", 
+            properties = { tag = self.env.theme == "ruby" and "Back" or "Free",
                            fullscreen = false }
         },
         -- KeePass
@@ -133,7 +133,7 @@ function rules:init(args)
         {
             rule_any   = { class = { "Nautilus", "Thunar", "Nemo" } },
             properties = { tag = self.env.theme == "ruby" and "Nav" or "Main",
-                           switchtotag = true } 
+                           switchtotag = true }
         },
         -- Thunderbird
         {
@@ -147,7 +147,7 @@ function rules:init(args)
         },
         {
             rule       = { class = "vlc", name = "VLSub.*" },
-            properties = { tag = "Full", floating = true, 
+            properties = { tag = "Full", floating = true,
                            size_hints_honor = true }
         },
         -- Web Browsers
@@ -189,10 +189,15 @@ function rules:init(args)
 						end
 					end
 				end)
+    },
+
+		-- Jetbrains splash screen fix
+		{
+			rule_any = { class = { "jetbrains-%w+", "java-lang-Thread" } },
+			callback = function(jetbrains)
+				if jetbrains.skip_taskbar then jetbrains.floating = true end
 			end
 		}
-	}
-
 
 	-- Set rules
 	--------------------------------------------------------------------------------
