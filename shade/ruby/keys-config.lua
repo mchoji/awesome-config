@@ -901,14 +901,22 @@ function hotkeys:init(args)
 			{ "Control" }, "XF86AudioMute", microphone_mute,
 			{ description = "Mute microphone", group = "Volume control" }
 		},
-
 		{
-			{}, "XF86MonBrightnessUp", function() brightness({ step = 2 }) end,
+			{ env.mod }, "F8", function() brightness({ step = 2 }) end,
 			{ description = "Increase brightness", group = "Brightness control" }
 		},
 		{
-			{}, "XF86MonBrightnessDown", function() brightness({ step = 2, down = true }) end,
+			{ env.mod }, "F7", function() brightness({ step = 2, down = true }) end,
 			{ description = "Reduce brightness", group = "Brightness control" }
+		},
+
+		{
+			{}, "XF86MonBrightnessUp", function() brightness({ step = 2 }) end,
+			{} -- hidden key
+		},
+		{
+			{}, "XF86MonBrightnessDown", function() brightness({ step = 2, down = true }) end,
+			{} -- hidden key
 		},
 
 		{
@@ -916,12 +924,20 @@ function hotkeys:init(args)
 			{ description = "Show/hide widget", group = "Audio player" }
 		},
 		{
-			{}, "XF86AudioPlay", function() redflat.float.player:action("PlayPause") end,
+			{ env.mod }, "F5", function() redflat.float.player:action("PlayPause") end,
 			{ description = "Play/Pause track", group = "Audio player" }
 		},
 		{
-			{}, "XF86AudioNext", function() redflat.float.player:action("Next") end,
+			{ env.mod }, "F6", function() redflat.float.player:action("Next") end,
 			{ description = "Next track", group = "Audio player" }
+		},
+		{
+			{}, "XF86AudioPlay", function() redflat.float.player:action("PlayPause") end,
+			{} -- hidden key
+		},
+		{
+			{}, "XF86AudioNext", function() redflat.float.player:action("Next") end,
+			{} -- hidden key
 		},
 		{
 			{}, "XF86AudioPrev", function() redflat.float.player:action("Previous") end,
