@@ -104,7 +104,8 @@ function rules:init(args)
         -- Evince
         {
             rule       = { class = "Evince" },
-            properties = { tag = "Read", switchtotag = true }
+            properties = { tag = "Read", switchtotag = true,
+                           maximized = false, focus = true }
         },
         -- VS Code
         {
@@ -117,9 +118,25 @@ function rules:init(args)
             rule       = { class = "org-jabref-JabRefMain" },
             properties = { tag = self.env.theme == "ruby" and "Misc" or "Free" }
         },
+        {
+            rule       = { class = "org.jabref.JabRefMain",
+                           name = "Rename file" },
+            properties = { floating = true }
+        },
+        {
+            rule       = { class = "org.jabref.JabRefMain",
+                           name = "Move file" },
+            properties = { floating = true }
+        },
         -- WPS Office
         {
-            rule_any   = { class = { "Wps", "Wpp", "Et" }},
+            rule_any   = { class = { "Wps", "Wpp", "Et" } },
+            properties = { tag = self.env.theme == "ruby" and "Misc" or "Full",
+                           switchtotag = true, maximized = true }
+        },
+        -- LibreOffice
+        {
+            rule       = { instance = "libreoffice" },
             properties = { tag = self.env.theme == "ruby" and "Misc" or "Full",
                            switchtotag = true, maximized = true }
         },
@@ -152,7 +169,7 @@ function rules:init(args)
         },
         -- Web Browsers
         {
-            rule_any   = { class = { "Chromium-browser", "Firefox" } },
+            rule_any   = { class = { "Chromium-browser", "firefox" } },
             properties = { maximized = false }
         },
         -- Tor Browser
@@ -168,28 +185,29 @@ function rules:init(args)
             properties = { tag = self.env.theme == "ruby" and "Code" or "Full",
                            switchtotag = true }
         },
-		-- Jetbrains dirty focus trick assuming separate tag used for IDE
-		{
-			rule       = { class = "jetbrains-%w+", type = "normal" },
+		    -- Jetbrains dirty focus trick assuming separate tag used for IDE
+		    {
+			      rule       = { class = "jetbrains-%w+", type = "normal" },
             except     = { class = "jetbrains-toolbox" },
-			callback = function(jetbrain)
-				local initial_tag = jetbrain.first_tag -- remember tag for unmanaged
-				jetbrain:connect_signal("focus", function(c)
-					for _, win in ipairs(c.first_tag:clients()) do
-						if win.name ~= c.name and win.type == "normal" then win.minimized = true end
-					end
-				end)
-				jetbrain:connect_signal("unmanage", function(c)
-					for _, win in ipairs(initial_tag:clients()) do
-						if win.name ~= c.name and win.type == "normal" then
-							win.minimized = false
-							client.focus = win
-							win:raise()
-							return
-						end
-					end
-				end)
-    },
+			      callback = function(jetbrain)
+				                local initial_tag = jetbrain.first_tag -- remember tag for unmanaged
+				                jetbrain:connect_signal("focus", function(c)
+					                for _, win in ipairs(c.first_tag:clients()) do
+						                if win.name ~= c.name and win.type == "normal" then win.minimized = true end
+				                  end
+				                end)
+				                jetbrain:connect_signal("unmanage", function(c)
+					                for _, win in ipairs(initial_tag:clients()) do
+						                if win.name ~= c.name and win.type == "normal" then
+							                win.minimized = false
+							                client.focus = win
+							                win:raise()
+							                return
+						                end
+					                end
+				                end)
+                      end
+      },
 
 		-- Jetbrains splash screen fix
 		{
@@ -198,6 +216,7 @@ function rules:init(args)
 				if jetbrains.skip_taskbar then jetbrains.floating = true end
 			end
 		}
+  }
 
 	-- Set rules
 	--------------------------------------------------------------------------------
