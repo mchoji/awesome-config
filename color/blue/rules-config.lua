@@ -136,7 +136,7 @@ function rules:init(args)
         },
         -- LibreOffice
         {
-            rule       = { instance = "libreoffice" },
+            rule       = { class = "libreoffice" },
             properties = { tag = self.env.theme == "ruby" and "Misc" or "Full",
                            switchtotag = true, maximized = true }
         },
