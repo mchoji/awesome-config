@@ -98,7 +98,7 @@ function rules:init(args)
         },
         -- KeePass
         {
-            rule       = { class = "keepassxc" },
+            rule       = { instance = "keepassxc" },
             properties = { tag = self.env.theme == "ruby" and "Back" or "Free" }
         },
         -- Evince

@@ -25,7 +25,8 @@ function autostart.run()
 
 	-- utils
     awful.spawn.with_shell("compton")
-	awful.spawn.with_shell("nm-applet")
+	  --awful.spawn.with_shell("nm-applet")
+    awful.spawn.with_shell("wpa_cli -i wlp3s0 -B -a ~/bin/wpa_supplicant_notify.sh")
     awful.spawn.with_shell("libinput-gestures-setup start")
     --awful.spawn.with_shell("cbatticon -i standard -l 15 -r 5 -c 'systemctl hibernate'")
 
