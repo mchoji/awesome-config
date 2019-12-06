@@ -136,9 +136,9 @@ function rules:init(args)
         },
         -- LibreOffice
         {
-            rule       = { class = "libreoffice" },
+            rule_any   = { class = { "libreoffice-*", "Soffice" } },
             properties = { tag = self.env.theme == "ruby" and "Misc" or "Full",
-                           switchtotag = true, maximized = true }
+                           switchtotag = true, maximized = false }
         },
         -- Wireshark
         {
@@ -150,7 +150,7 @@ function rules:init(args)
         {
             rule_any   = { class = { "Nautilus", "Thunar", "Nemo" } },
             properties = { tag = self.env.theme == "ruby" and "Nav" or "Main",
-                           switchtotag = true }
+                           switchtotag = true, maximized = false }
         },
         -- Thunderbird
         {
