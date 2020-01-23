@@ -772,7 +772,7 @@ function hotkeys:init(args)
 			{ description = "Open a terminal", group = "Applications" }
 		},
 		{
-			{ env.mod, "Mod1" }, "space", function() awful.spawn("clipflap --show") end,
+			{ env.mod, "Mod1" }, "space", function() awful.spawn("gpaste-client ui") end,
 			{ description = "Clipboard manager", group = "Applications" }
 		},
         {
