@@ -92,9 +92,10 @@ function rules:init(args)
         },
         -- Spotify
         {
-            rule       = { name = "[sS]potify" },
+            rule       = { class = "[sS]potify" },
             properties = { tag = self.env.theme == "ruby" and "Back" or "Free",
-                           fullscreen = false }
+                           fullscreen = false, focus = true,
+                           switchtotag = true }
         },
         -- KeePass
         {
