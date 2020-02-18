@@ -31,8 +31,8 @@ theme:update()
 -- Desktop file parser
 --------------------------------------------------------------------------------
 theme.service.dfparser.icons.theme         = theme.homedir .. "/.icons/Flat-Remix-Green-Dark"
-theme.service.dfparser.icons.custom_only   = false 
-theme.service.dfparser.icons.scalable_only = false
+theme.service.dfparser.icons.custom_only   = true
+theme.service.dfparser.icons.scalable_only = true
 
 
 -- Desktop config
@@ -225,6 +225,14 @@ theme.gauge.monitor.dash.width = 11
 theme.widget.tasklist.char_digit = 5
 theme.widget.tasklist.task = theme.gauge.task.ruby
 theme.widget.tasklist.tasktip.max_width = 1200
+
+theme.widget.tasklist.parser = {
+  desktop_file_dirs = awful.util.table.join(
+    theme.service.dfparser.desktop_file_dirs,
+    { '~/.local/share/applications-fake' }
+  )
+}
+
 
 -- KB layout indicator
 theme.widget.keyboard.icon = theme.path .. "/widget/keyboard.svg"
