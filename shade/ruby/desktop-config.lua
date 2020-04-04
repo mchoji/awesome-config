@@ -154,7 +154,7 @@ function desktop:init(args)
 	system.lmsensors.patterns = {
 		cpu       = { match = "CPU:%s+%+(%d+)%.%d°[CF]" },
 		ram       = { match = "SODIMM:%s+%+(%d+)%.%d°[CF]" },
-		--wifi      = { match = "iwlwifi%-virtual%-0\r?\nAdapter:%sVirtual%sdevice\r?\ntemp1:%s+%+(%d+)%.%d°[CF]" },
+		wifi      = { match = "ath10k_hwmon%-pci%-%d+\r?\nAdapter:%sPCI%sadapter\r?\ntemp1:%s+%+(%d+)%.%d°[CF]" },
 		chip      = { match = "pch_skylake%-virtual%-0\r?\nAdapter:%sVirtual%sdevice\r?\ntemp1:%s+%+(%d+)%.%d°[CF]" },
 		cpu_fan   = { match = "Processor%sFan:%s+(%d+)%sRPM" },
 		video_fan = { match = "Video%sFan:%s+(%d+)%sRPM" },
@@ -170,8 +170,8 @@ function desktop:init(args)
 	thermal_chips.args = {
 		sensors = {
 			{ meter_function = system.lmsensors.get, args = "cpu",  maxm = 100, crit = 75, name = "cpu"  },
-			--{ meter_function = system.lmsensors.get, args = "wifi", maxm = 100, crit = 75, name = "wifi" },
-            { meter_function = system.lmsensors.get, args = "chip", maxm = 100, crit = 75, name = "chip" },
+			{ meter_function = system.lmsensors.get, args = "wifi", maxm = 100, crit = 75, name = "wifi" },
+			{ meter_function = system.lmsensors.get, args = "chip", maxm = 100, crit = 75, name = "chip" },
 			{ async_function = system.thermal.nvoptimus, maxm = 105, crit = 80, name = "gpu" }
 		},
 		timeout = sensors_base_timeout,
@@ -185,7 +185,7 @@ function desktop:init(args)
 
 	local hdd_smart_check = system.simple_async("sudo smartctl --attributes /dev/sdb", "194.+%s+(%d+)%s+%(.+%)\r?\n")
 	--local ssd_smart_check = system.simple_async("smartctl --attributes /dev/nvme0n1", "Temperature:%s+(%d+)%sCelsius")
-    local ssd_smart_check = system.simple_async("sudo smartctl --attributes /dev/sda | grep -E '^194' | awk -F' +' '{print $10}'", "%d+")
+	local ssd_smart_check = system.simple_async("sudo smartctl --attributes /dev/sda | grep -E '^194' | awk -F' +' '{print $10}'", "%d+")
 
 	thermal_storage.args = {
 		sensors = {
@@ -214,8 +214,8 @@ function desktop:init(args)
 	--------------------------------------------------------------------------------
 	local vnstat = { geometry = wgeometry(grid, places.vnstat, workarea) }
 
-	local vnstat_daily   = system.vnstat_check("-d -i wlp3s0 --locale pt_BR.UTF8")
-	local vnstat_monthly = system.vnstat_check("-m -i wlp3s0 --locale pt_BR.UTF8")
+	local vnstat_daily   = system.vnstat_check({ options = "-d -i wlp3s0 --locale pt_BR.UTF8" })
+	local vnstat_monthly = system.vnstat_check({ options = "-m -i wlp3s0 --locale pt_BR.UTF8" })
 
 	vnstat.args = {
 		sensors = {
