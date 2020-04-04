@@ -3,6 +3,17 @@ Custom config for [Awesome WM](http://awesome.naquadah.org).
 
 This config is compatible with AwesomeWM version 4.0 and newer.
 
+**Note:** this is a fork made mostly for personal customization of the original _ruby_ theme.
+These personal preferences are being commited to branch _myruby_, which is set by default in this repository.
+The branch _master_ is supposed to be up to date with the original project.
+
+Here is a list of some modifications I made to original _ruby_ theme:
+```
+Volume widget indicator   > red when audio is on, gray otherwise
+Microphone widget         > keys to control mic volume and custom notification icon
+rules                     > additional rules to place some programs in predefined tags
+```
+
 ## Screenshot
 ![](https://github.com/worron/awesome-config/wiki/images/v400/ruby.png)
 <!--suppress HtmlDeprecatedAttribute --><p align="center"><a href="https://github.com/worron/awesome-config/wiki">Gallery</a></p>
@@ -54,7 +65,7 @@ Main code base can be found in `redflat` submodule.
 Copy scripts to WM setting folder. 
 Simple way to do so with `git`
 ```shell
-$ git clone https://github.com/worron/awesome-config.git ~/.config/awesome --recursive
+$ git clone https://github.com/mchoji/awesome-config.git ~/.config/awesome --recursive
 ```
 Then edit `rc.lua` to select wanted config.
 

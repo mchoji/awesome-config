@@ -28,6 +28,12 @@ theme.desktopbg    = theme.path .. "/wallpaper/transparent.png"
 --------------------------------------------------------------------------------
 theme:update()
 
+-- Desktop file parser
+--------------------------------------------------------------------------------
+theme.service.dfparser.icons.theme         = theme.homedir .. "/.icons/Flat-Remix-Green-Dark"
+theme.service.dfparser.icons.custom_only   = true
+theme.service.dfparser.icons.scalable_only = true
+
 
 -- Desktop config
 -----------------------------------------------------------------------------------------------------------------------
@@ -220,6 +226,14 @@ theme.widget.tasklist.char_digit = 5
 theme.widget.tasklist.task = theme.gauge.task.ruby
 theme.widget.tasklist.tasktip.max_width = 1200
 
+theme.widget.tasklist.parser = {
+  desktop_file_dirs = awful.util.table.join(
+    theme.service.dfparser.desktop_file_dirs,
+    { '~/.local/share/applications-fake' }
+  )
+}
+
+
 -- KB layout indicator
 theme.widget.keyboard.icon = theme.path .. "/widget/keyboard.svg"
 
@@ -238,6 +252,9 @@ theme.individual.microphone_audio = {
 	--dash    = { line = { num = 3, height = 5 } },
 	icon    = theme.path .. "/widget/microphone.svg",
 	color   = { icon = theme.color.main, mute = theme.color.icon }
+}
+theme.individual.volume_audio = {
+    color   = { icon = theme.color.main, mute = theme.color.icon }
 }
 
 -- Floating widgets

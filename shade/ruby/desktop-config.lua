@@ -37,7 +37,7 @@ function desktop:init(args)
 
 	netspeed.args = {
 		meter_function = system.net_speed,
-		interface      = "wlp60s0",
+		interface      = "wlp3s0",
 		maxspeed       = { up = 6*1024^2, down = 6*1024^2 },
 		crit           = { up = 6*1024^2, down = 6*1024^2 },
 		timeout        = 2,
@@ -52,7 +52,7 @@ function desktop:init(args)
 	local ssdspeed = { geometry = wgeometry(grid, places.ssdspeed, workarea) }
 
 	ssdspeed.args = {
-		interface      = "nvme0n1",
+		interface      = "sda",
 		meter_function = system.disk_speed,
 		timeout        = 2,
 		label          = "SOLID DRIVE"
@@ -65,7 +65,7 @@ function desktop:init(args)
 	local hddspeed = { geometry = wgeometry(grid, places.hddspeed, workarea) }
 
 	hddspeed.args = {
-		interface      = "sda",
+		interface      = "sdb",
 		meter_function = system.disk_speed,
 		timeout        = 2,
 		label          = "HARD DRIVE"
@@ -110,8 +110,9 @@ function desktop:init(args)
 		sensors  = {
 			{ meter_function = system.fs_info, maxm = 100, crit = 80, name = "root",    args = "/"            },
 			{ meter_function = system.fs_info, maxm = 100, crit = 80, name = "home",    args = "/home"        },
-			{ meter_function = system.fs_info, maxm = 100, crit = 80, name = "storage", args = "/mnt/storage" },
-			{ meter_function = system.fs_info, maxm = 100, crit = 80, name = "media",   args = "/mnt/media"   },
+			{ meter_function = system.fs_info, maxm = 100, crit = 80, name = "var",     args = "/var"         },
+			{ meter_function = system.fs_info, maxm = 100, crit = 80, name = "torrent", args = "/mnt/torrent" },
+            { meter_function = system.fs_info, maxm = 100, crit = 80, name = "docker",  args = "/mnt/docker"  },
 		},
 		timeout = 300
 	}
@@ -120,8 +121,8 @@ function desktop:init(args)
 
 	-- QEMU image (placed along with disks)
 	--------------------------------------------------------------------------------
-	local qm1 = "/mnt/storage/vmdrive/win10-gvt/win10-gvt-base.qcow2"
-	local qm2 = "/mnt/storage/vmdrive/win10-gvt/win10-gvt-current.qcow2"
+	--local qm1 = "/mnt/storage/vmdrive/win10-gvt/win10-gvt-base.qcow2"
+	--local qm2 = "/mnt/storage/vmdrive/win10-gvt/snap/win10-gvt-current.qcow2"
 
 	local bms = beautiful.desktop.multimeter -- base multimeter style
 	local dy = disks_original_height - (bms.height.upright + bms.height.lines)
@@ -135,13 +136,13 @@ function desktop:init(args)
 	qemu.geometry.height = beautiful.desktop.multimeter.height.lines
 
 	--setup
-	qemu.args = {
+	--[[qemu.args = {
 		sensors  = {
 			{ meter_function = system.qemu_image_size, maxm = 100, crit = 90, name = "qemu-w10-base", args = qm1 },
 			{ meter_function = system.qemu_image_size, maxm = 100, crit = 80, name = "qemu-w10-snap", args = qm2 },
 		},
 		timeout = 600
-	}
+	}--]]
 
 	qemu.style = beautiful.individual.desktop.multiline.images
 
@@ -153,8 +154,8 @@ function desktop:init(args)
 	system.lmsensors.patterns = {
 		cpu       = { match = "CPU:%s+%+(%d+)%.%d°[CF]" },
 		ram       = { match = "SODIMM:%s+%+(%d+)%.%d°[CF]" },
-		wifi      = { match = "iwlwifi_1%-virtual%-0\r?\nAdapter:%sVirtual%sdevice\r?\ntemp1:%s+%+(%d+)%.%d°[CF]" },
-		--chip      = { match = "pch_skylake%-virtual%-0\r?\nAdapter:%sVirtual%sdevice\r?\ntemp1:%s+%+(%d+)%.%d°[CF]" },
+		wifi      = { match = "ath10k_hwmon%-pci%-%d+\r?\nAdapter:%sPCI%sadapter\r?\ntemp1:%s+%+(%d+)%.%d°[CF]" },
+		chip      = { match = "pch_skylake%-virtual%-0\r?\nAdapter:%sVirtual%sdevice\r?\ntemp1:%s+%+(%d+)%.%d°[CF]" },
 		cpu_fan   = { match = "Processor%sFan:%s+(%d+)%sRPM" },
 		video_fan = { match = "Video%sFan:%s+(%d+)%sRPM" },
 	}
@@ -170,6 +171,7 @@ function desktop:init(args)
 		sensors = {
 			{ meter_function = system.lmsensors.get, args = "cpu",  maxm = 100, crit = 75, name = "cpu"  },
 			{ meter_function = system.lmsensors.get, args = "wifi", maxm = 100, crit = 75, name = "wifi" },
+			{ meter_function = system.lmsensors.get, args = "chip", maxm = 100, crit = 75, name = "chip" },
 			{ async_function = system.thermal.nvoptimus, maxm = 105, crit = 80, name = "gpu" }
 		},
 		timeout = sensors_base_timeout,
@@ -181,8 +183,9 @@ function desktop:init(args)
 	--------------------------------------------------------------------------------
 	local thermal_storage = { geometry = wgeometry(grid, places.thermal2, workarea) }
 
-	local hdd_smart_check = system.simple_async("smartctl --attributes /dev/sda", "194.+%s(%d+)%s%(.+%)\r?\n")
-	local ssd_smart_check = system.simple_async("smartctl --attributes /dev/nvme0n1", "Temperature:%s+(%d+)%sCelsius")
+	local hdd_smart_check = system.simple_async("sudo smartctl --attributes /dev/sdb", "194.+%s+(%d+)%s+%(.+%)\r?\n")
+	--local ssd_smart_check = system.simple_async("smartctl --attributes /dev/nvme0n1", "Temperature:%s+(%d+)%sCelsius")
+	local ssd_smart_check = system.simple_async("sudo smartctl --attributes /dev/sda | grep -E '^194' | awk -F' +' '{print $10}'", "%d+")
 
 	thermal_storage.args = {
 		sensors = {
@@ -211,8 +214,8 @@ function desktop:init(args)
 	--------------------------------------------------------------------------------
 	local vnstat = { geometry = wgeometry(grid, places.vnstat, workarea) }
 
-	local vnstat_daily   = system.vnstat_check({ options = '-d', traffic = 'rx' })
-	local vnstat_monthly = system.vnstat_check({ options = '-m', traffic = 'rx' })
+	local vnstat_daily   = system.vnstat_check({ options = "-d -i wlp3s0 --locale pt_BR.UTF8" })
+	local vnstat_monthly = system.vnstat_check({ options = "-m -i wlp3s0 --locale pt_BR.UTF8" })
 
 	vnstat.args = {
 		sensors = {
@@ -245,7 +248,7 @@ function desktop:init(args)
 	transm.body = redflat.desktop.multimeter(transm.args, transm.style)
 
 	disks.body  = redflat.desktop.multiline(disks.args, disks.style)
-	qemu.body  = redflat.desktop.multiline(qemu.args, qemu.style)
+	--qemu.body  = redflat.desktop.multiline(qemu.args, qemu.style)
 
 	thermal_chips.body = redflat.desktop.multiline(thermal_chips.args, thermal_chips.style)
 	thermal_storage.body = redflat.desktop.multiline(thermal_storage.args, thermal_storage.style)
@@ -259,7 +262,7 @@ function desktop:init(args)
 	--------------------------------------------------------------------------------
 	local desktop_objects = {
 		calendar, netspeed, hddspeed, ssdspeed, transm, cpumem,
-		disks, qemu, vnstat, fan, thermal_chips, thermal_storage
+		disks, vnstat, fan, thermal_chips, thermal_storage
 	}
 
 	if not autohide then

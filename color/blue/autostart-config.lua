@@ -13,24 +13,31 @@ local autostart = {}
 --------------------------------------------------------------------------------
 function autostart.run()
 	-- environment
-	awful.spawn.with_shell("python ~/scripts/env/pa-setup.py")
-	awful.spawn.with_shell("python ~/scripts/env/color-profile-setup.py")
-	awful.spawn.with_shell("python ~/scripts/env/kbd-setup.py")
+	--awful.spawn.with_shell("python ~/scripts/env/pa-setup.py")
+	--awful.spawn.with_shell("python ~/scripts/env/color-profile-setup.py")
+	--awful.spawn.with_shell("python ~/scripts/env/kbd-setup.py")
 
 	-- gnome environment
 	awful.spawn.with_shell("/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1")
 
 	-- firefox sync
-	awful.spawn.with_shell("python ~/scripts/firefox/ff-sync.py")
+	--awful.spawn.with_shell("python ~/scripts/firefox/ff-sync.py")
 
 	-- utils
-	awful.spawn.with_shell("compton")
-	awful.spawn.with_shell("nm-applet")
+    awful.spawn.with_shell("compton")
+	  --awful.spawn.with_shell("nm-applet")
+    awful.spawn.with_shell("wpa_cli -i wlp3s0 -B -a ~/bin/wpa_supplicant_notify.sh")
+    awful.spawn.with_shell("libinput-gestures-setup start")
+    --awful.spawn.with_shell("cbatticon -i standard -l 15 -r 5 -c 'systemctl hibernate'")
+
+    -- xfce4 utils
+    awful.spawn.with_shell("xfce4-power-manager --sm-client-disable")
 
 	-- apps
-	awful.spawn.with_shell("gpaste-client start")
-	awful.spawn.with_shell("transmission-gtk -m")
-	awful.spawn.with_shell("pragha --toggle_view")
+    awful.spawn.with_shell("keepassxc")
+	--awful.spawn.with_shell("clipflap")
+	--awful.spawn.with_shell("transmission-gtk -m")
+	--awful.spawn.with_shell("pragha --toggle_view")
 end
 
 -- Read and commads from file and spawn them

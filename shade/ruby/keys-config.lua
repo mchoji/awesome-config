@@ -204,6 +204,11 @@ function hotkeys:init(args)
 	local volume_lower = function() volume:change_volume({ show_notify = true, down = true }) end
 	local volume_mute  = function() volume:mute() end
 
+    -- microphone functions
+    local microphone_raise = function() microphone:change_volume({ show_notify = true }) end
+    local microphone_lower = function() microphone:change_volume({ show_notify = true, down = true }) end
+    local microphone_mute  = function() microphone:mute() end 
+
 	-- Init widgets
 	redflat.float.qlaunch:init()
 
@@ -770,6 +775,10 @@ function hotkeys:init(args)
 			{ env.mod, "Mod1" }, "space", function() awful.spawn("gpaste-client ui") end,
 			{ description = "Clipboard manager", group = "Applications" }
 		},
+        {
+            {}, "Print", function() awful.spawn("xfce4-screenshooter") end,
+            { description = "Take a screenshot", group = "Applications" }
+        },
 
 		{
 			{ env.mod }, "l", focus_switch_byd("right"),
@@ -805,7 +814,7 @@ function hotkeys:init(args)
 			{ description = "System updates info", group = "Widgets" }
 		},
 		{
-			{ env.mod }, "`", function() redflat.widget.minitray:toggle() end,
+			{ env.mod }, ";", function() redflat.widget.minitray:toggle() end,
 			{ description = "Minitray", group = "Widgets" }
 		},
 		{
@@ -880,18 +889,34 @@ function hotkeys:init(args)
 			{}, "XF86AudioMute", volume_mute,
 			{ description = "Mute audio", group = "Volume control" }
 		},
+        {
+            { "Control" }, "XF86AudioRaiseVolume", microphone_raise,
+            { description = "Increase microphone volume", group = "Volume control" }
+        },
+        {
+            { "Control" }, "XF86AudioLowerVolume", microphone_lower,
+            { description = "Reduce microphone volume", group = "Volume control" }
+        },
 		{
-			{ "Control" }, "XF86AudioMute", function () microphone:mute() end,
+			{ "Control" }, "XF86AudioMute", microphone_mute,
 			{ description = "Mute microphone", group = "Volume control" }
+		},
+		{
+			{ env.mod }, "F8", function() brightness({ step = 2 }) end,
+			{ description = "Increase brightness", group = "Brightness control" }
+		},
+		{
+			{ env.mod }, "F7", function() brightness({ step = 2, down = true }) end,
+			{ description = "Reduce brightness", group = "Brightness control" }
 		},
 
 		{
 			{}, "XF86MonBrightnessUp", function() brightness({ step = 2 }) end,
-			{ description = "Increase brightness", group = "Brightness control" }
+			{} -- hidden key
 		},
 		{
 			{}, "XF86MonBrightnessDown", function() brightness({ step = 2, down = true }) end,
-			{ description = "Reduce brightness", group = "Brightness control" }
+			{} -- hidden key
 		},
 
 		{
@@ -899,12 +924,20 @@ function hotkeys:init(args)
 			{ description = "Show/hide widget", group = "Audio player" }
 		},
 		{
-			{}, "XF86AudioPlay", function() redflat.float.player:action("PlayPause") end,
+			{ env.mod }, "F5", function() redflat.float.player:action("PlayPause") end,
 			{ description = "Play/Pause track", group = "Audio player" }
 		},
 		{
-			{}, "XF86AudioNext", function() redflat.float.player:action("Next") end,
+			{ env.mod }, "F6", function() redflat.float.player:action("Next") end,
 			{ description = "Next track", group = "Audio player" }
+		},
+		{
+			{}, "XF86AudioPlay", function() redflat.float.player:action("PlayPause") end,
+			{} -- hidden key
+		},
+		{
+			{}, "XF86AudioNext", function() redflat.float.player:action("Next") end,
+			{} -- hidden key
 		},
 		{
 			{}, "XF86AudioPrev", function() redflat.float.player:action("Previous") end,
@@ -1003,8 +1036,8 @@ function hotkeys:init(args)
 	self.mouse.client = awful.util.table.join(
 		awful.button({}, 1, function (c) client.focus = c; c:raise() end),
 		awful.button({}, 2, awful.mouse.client.move),
-		awful.button({ env.mod }, 3, awful.mouse.client.resize),
-		awful.button({}, 8, function(c) c:kill() end)
+		awful.button({ env.mod }, 3, awful.mouse.client.resize)
+		--awful.button({}, 8, function(c) c:kill() end)
 	)
 
 	-- Set root hotkeys
