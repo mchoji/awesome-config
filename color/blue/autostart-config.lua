@@ -24,17 +24,18 @@ function autostart.run()
 	--awful.spawn.with_shell("python ~/scripts/firefox/ff-sync.py")
 
 	-- utils
-    awful.spawn.with_shell("compton")
+	awful.spawn.with_shell("compton")
 	  --awful.spawn.with_shell("nm-applet")
-    awful.spawn.with_shell("wpa_cli -i wlp3s0 -B -a ~/bin/wpa_supplicant_notify.sh")
-    awful.spawn.with_shell("libinput-gestures-setup start")
-    --awful.spawn.with_shell("cbatticon -i standard -l 15 -r 5 -c 'systemctl hibernate'")
+	awful.spawn.with_shell("wpa_cli -i wlp3s0 -B -a ~/bin/wpa_supplicant_notify.sh")
+	awful.spawn.with_shell("libinput-gestures-setup start")
+	--awful.spawn.with_shell("cbatticon -i standard -l 15 -r 5 -c 'systemctl hibernate'")
 
-    -- xfce4 utils
-    awful.spawn.with_shell("xfce4-power-manager --sm-client-disable")
+	-- xfce4 utils
+	awful.spawn.with_shell("xfce4-power-manager --sm-client-disable")
 
 	-- apps
-    awful.spawn.with_shell("keepassxc")
+	awful.spawn.with_shell("keepassxc")
+	awful.spawn.with_shell("megasync")
 	--awful.spawn.with_shell("clipflap")
 	--awful.spawn.with_shell("transmission-gtk -m")
 	--awful.spawn.with_shell("pragha --toggle_view")
