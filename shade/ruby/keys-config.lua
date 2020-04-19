@@ -775,11 +775,14 @@ function hotkeys:init(args)
 			{ env.mod, "Mod1" }, "space", function() awful.spawn("gpaste-client ui") end,
 			{ description = "Clipboard manager", group = "Applications" }
 		},
-        {
-            {}, "Print", function() awful.spawn("xfce4-screenshooter") end,
-            { description = "Take a screenshot", group = "Applications" }
-        },
-
+		{
+			{}, "Print", function() awful.spawn("flameshot gui -p "..os.getenv("HOME").."/Pictures/captures") end,
+			{ description = "Take a screenshot", group = "Applications" }
+		},
+		{
+			{ env.mod }, "Print", function() awful.spawn("flameshot full -d 3000 -p "..os.getenv("HOME").."/Pictures/captures") end,
+			{ description = "Take a screenshot from the entire desktop after 3s", group = "Applications" }
+		},
 		{
 			{ env.mod }, "l", focus_switch_byd("right"),
 			{ description = "Go to right client", group = "Client focus" }
@@ -1043,8 +1046,8 @@ function hotkeys:init(args)
 	self.mouse.client = awful.util.table.join(
 		awful.button({}, 1, function (c) client.focus = c; c:raise() end),
 		awful.button({}, 2, awful.mouse.client.move),
-		awful.button({ env.mod }, 3, awful.mouse.client.resize),
-		awful.button({}, 8, game_safe_kill)
+		awful.button({ env.mod }, 3, awful.mouse.client.resize)
+		--awful.button({}, 8, game_safe_kill)
 	)
 
 	-- Set root hotkeys
