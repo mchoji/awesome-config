@@ -34,7 +34,7 @@ appnames["code-oss"             ] = "CODE"
 appnames["Spotify"              ] = "SPTFY"
 appnames["Spyder"               ] = "SPYDR"
 appnames["Wireshark"            ] = "WSHARK"
-appnames["org-jabref-JabRefMain"] = "JBREF"
+appnames["org.jabref.JabRefMain"] = "JBREF"
 
 return appnames
 

@@ -116,7 +116,7 @@ function rules:init(args)
         },
         -- JabRef
         {
-            rule       = { class = "org-jabref-JabRefMain" },
+            rule       = { class = "org.jabref.JabRefMain" },
             properties = { tag = self.env.theme == "ruby" and "Misc" or "Free" }
         },
         {
