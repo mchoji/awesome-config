@@ -112,7 +112,7 @@ function rules:init(args)
         {
             rule       = { class = "code-oss" },
             properties = { tag = self.env.theme == "ruby" and "Code" or "Edit",
-                           maximized = true, switchtotag = true }
+                           switchtotag = true }
         },
         -- JabRef
         {
@@ -189,7 +189,7 @@ function rules:init(args)
 		    -- Jetbrains dirty focus trick assuming separate tag used for IDE
 		    {
 			      rule       = { class = "jetbrains-%w+", type = "normal" },
-            except     = { class = "jetbrains-toolbox" },
+            except_any     = { class = { "jetbrains-toolbox" }, name = { "Welcome to %w+" } },
 			      callback = function(jetbrain)
 				                local initial_tag = jetbrain.first_tag -- remember tag for unmanaged
 				                jetbrain:connect_signal("focus", function(c)
@@ -209,7 +209,6 @@ function rules:init(args)
 				                end)
                       end
       },
-
 		-- Jetbrains splash screen fix
 		{
 			rule_any = { class = { "jetbrains-%w+", "java-lang-Thread" } },
